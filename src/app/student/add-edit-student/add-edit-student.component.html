@@ -1,0 +1,68 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+  <form [formGroup]="StudentForm" class="p-2 w-100 bd-highlight">
+    <div class="p-2 w-100 bd-highlight">
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text">Name</span>
+        <input [class.is-invalid]="studName?.invalid && studName?.touched" formControlName="studentName" type="text" class="form-control" [(ngModel)]="studentName">
+        <div *ngIf="studName?.invalid && studName?.touched">
+          <small *ngIf="studName?.errors?.['required']" class="text-danger message">Student Name is required</small>
+        </div>
+      </div>
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text">Department</span>
+        <select [class.is-invalid]="studDeptId?.invalid && studDeptId?.touched" formControlName="departmentId" class="form-select" [(ngModel)]="departmentId">
+          <option value="">--Select--</option>
+          <option *ngFor="let dep of DepartmentList" [value]="dep.departmentId">
+            {{dep.departmentName}}
+          </option>
+        </select>
+        <div *ngIf="studDeptId?.invalid && studDeptId?.touched">
+          <small *ngIf="studDeptId?.errors?.['required']|| studDeptId?.errors?.['invalid']" class="text-danger message">Please select the Department</small>
+        </div>
+      </div>
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text">Course</span>
+        <input [class.is-invalid]="studCourse?.invalid && studCourse?.touched" formControlName="course" type="text" class="form-control" [(ngModel)]="course">
+        <div *ngIf="studCourse?.invalid && studCourse?.touched">
+          <small *ngIf="studCourse?.errors?.['required']" class="text-danger message">Course is required</small>
+        </div>
+      </div>
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text">Specialization</span>
+        <input [class.is-invalid]="studSpec?.invalid && studSpec?.touched" formControlName="specialization" type="text" class="form-control" [(ngModel)]="specialization">
+        <div *ngIf="studSpec?.invalid && studSpec?.touched">
+          <small *ngIf="studSpec?.errors?.['required']" class="text-danger message">Specification is required</small>
+        </div>
+      </div>
+      <div class="input-group mb-3 form-group">
+        <span class="input-group-text">Percentage</span>
+        <input [class.is-invalid]="studPer?.invalid && studPer?.touched" formControlName="percentage" type="text" class="form-control" [(ngModel)]="percentage">
+        <div *ngIf="studPer?.invalid && studPer?.touched">
+          <small *ngIf="studPer?.errors?.['required']" class="text-danger message">Percentage is required</small>
+          <small *ngIf="studPer?.errors?.['pattern']" class="text-danger message">Percentage must have only numbers</small>
+          <small *ngIf="!(studPer?.errors?.['required'] || studPer?.errors?.['pattern']) && studPer?.errors?.['limitCross']" class="text-danger message">Please provide percentage below 100</small>
+        </div>
+        <small class="text-warning message">[Note: Please donot use '%' sign]</small>
+      </div>
+    </div>
+    <div class="p-2 w-100 bd-highlight">
+      <button type="button" (click)="addStudent()" *ngIf="stud.studentId==0" class="btn btn-primary">
+        Create
+      </button>      
+      <button type="button" (click)="updateStudent()" *ngIf="stud.studentId!=0" class="btn btn-primary">
+        Update
+      </button>
+      <div *ngIf="!formValid">
+        <small class="text-primary">Please resolve the below validation before proceeding,
+          <div class="input-group mb-3 form-group">
+            <div *ngIf="studName?.errors?.['required']" class="message formControlNameBox">Student Name</div>
+            <div *ngIf="studDeptId?.errors?.['required']|| studDeptId?.errors?.['invalid']" class="message formControlNameBox">Department</div>
+            <div *ngIf="studCourse?.errors?.['required']" class="message formControlNameBox">Course</div>
+            <div *ngIf="studSpec?.errors?.['required']" class="message formControlNameBox">Specification</div>
+            <div *ngIf="studPer?.errors?.['required'] || studPer?.errors?.['pattern'] || studPer?.errors?.['limitCross']" class="message formControlNameBox">Percentage</div>
+          </div>
+        </small>
+      </div>
+    </div>
+  </form>
+</div>

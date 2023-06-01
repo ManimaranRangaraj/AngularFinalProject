@@ -1,0 +1,28 @@
+<div class="d-flex flex-row bd-highlight mb-9">
+  <form [formGroup]="DepartmentForm" class="p-2 w-100 bd-highlight">
+    <div class="p-2 w-100 bd-highlight">
+      <div class="input-group form-group">
+        <span class="input-group-text">Department Name</span>
+        <input [class.is-invalid]="departName?.invalid && departName?.touched" formControlName="departmentName" type="text" class="form-control" [(ngModel)]="departmentName">
+        <div *ngIf="departName?.invalid && departName?.touched">
+          <small *ngIf="departName?.errors?.['required']" class="text-danger message">Department Name is required</small>
+        </div>
+      </div>
+    </div>
+    <div class="p-2 w-100 bd-highlight">
+      <button (click)="addDepartment()" *ngIf="depart.departmentId == 0" class="btn btn-primary">
+        Add
+      </button>
+      <button (click)="updateDepartment()" *ngIf="depart.departmentId !=0" class="btn btn-primary">
+        Update
+      </button>
+      <div *ngIf="!formValid">
+        <small class="text-primary">Please resolve the below validation before proceeding,
+          <div class="input-group mb-3 form-group">
+            <div *ngIf="departName?.errors?.['required']" class="message formControlNameBox">Department Name</div>
+          </div>
+        </small>
+      </div>
+    </div>
+  </form>
+
